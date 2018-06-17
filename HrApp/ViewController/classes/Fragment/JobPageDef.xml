@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.1.3.10.8" id="JobPageDef" Package="Fragment">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="JobsView1" RangeSize="25" DataControl="AppModuleDataControl" id="JobsView1Iterator"/>
+  </executables>
+  <bindings>
+    <tree IterBinding="JobsView1Iterator" id="JobsView1">
+      <nodeDefinition DefName="model.JobsView" Name="JobsView10">
+        <AttrNames>
+          <Item Value="JobId"/>
+          <Item Value="JobTitle"/>
+          <Item Value="MinSalary"/>
+          <Item Value="MaxSalary"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <attributeValues IterBinding="JobsView1Iterator" id="JobId">
+      <AttrNames>
+        <Item Value="JobId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="JobsView1Iterator" id="JobTitle">
+      <AttrNames>
+        <Item Value="JobTitle"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="JobsView1Iterator" id="MinSalary">
+      <AttrNames>
+        <Item Value="MinSalary"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="JobsView1Iterator" id="MaxSalary">
+      <AttrNames>
+        <Item Value="MaxSalary"/>
+      </AttrNames>
+    </attributeValues>
+    <action IterBinding="JobsView1Iterator" id="Create" RequiresUpdateModel="true" Action="createRow"/>
+    <action IterBinding="JobsView1Iterator" id="Delete" RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <action IterBinding="JobsView1Iterator" id="Execute" InstanceName="AppModuleDataControl.JobsView1"
+            DataControl="AppModuleDataControl" RequiresUpdateModel="true" Action="iteratorExecute"/>
+    <action id="Commit" DataControl="AppModuleDataControl" RequiresUpdateModel="true" Action="commitTransaction"/>
+    <action id="Rollback" DataControl="AppModuleDataControl" RequiresUpdateModel="false" Action="rollbackTransaction"/>
+  </bindings>
+</pageDefinition>

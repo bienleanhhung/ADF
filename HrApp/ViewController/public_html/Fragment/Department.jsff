@@ -1,0 +1,122 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html">
+    <af:panelBox text="Departments Table" id="pb1">
+        <f:facet name="toolbar"/>
+        <af:panelCollection id="pc1">
+            <f:facet name="menus">
+                <af:menu text="File" id="m1">
+                    <af:commandMenuItem text="Export to Excel" id="cmi1">
+                        <af:exportCollectionActionListener type="excelHTML" exportedId="t1" filename="Department.xlsx"/>
+                    </af:commandMenuItem>
+                    <af:commandMenuItem text="Show as Printable Page" id="cmi2">
+                        <af:showPrintablePageBehavior/>
+                    </af:commandMenuItem>
+                </af:menu>
+            </f:facet>
+            <f:facet name="toolbar"/>
+            <f:facet name="statusbar"/>
+            <af:table value="#{bindings.DepartmentsView1.collectionModel}" var="row"
+                      rows="#{bindings.DepartmentsView1.rangeSize}"
+                      emptyText="#{bindings.DepartmentsView1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                      rowBandingInterval="0" selectedRowKeys="#{bindings.DepartmentsView1.collectionModel.selectedRow}"
+                      selectionListener="#{bindings.DepartmentsView1.collectionModel.makeCurrent}"
+                      rowSelection="#{CheckStatus.modeEdit}" fetchSize="#{bindings.DepartmentsView1.rangeSize}" id="t1"
+                      partialTriggers=":::b2 :::b3 :::b5 :::b4">
+                <af:column sortProperty="#{bindings.DepartmentsView1.hints.DepartmentId.name}" sortable="true"
+                           headerText="#{bindings.DepartmentsView1.hints.DepartmentId.label}" id="c1">
+                    <af:outputText value="#{row.DepartmentId}"
+                                   shortDesc="#{bindings.DepartmentsView1.hints.DepartmentId.tooltip}" id="ot1">
+                        <af:convertNumber groupingUsed="false"
+                                          pattern="#{bindings.DepartmentsView1.hints.DepartmentId.format}"/>
+                    </af:outputText>
+                </af:column>
+                <af:column sortProperty="#{bindings.DepartmentsView1.hints.DepartmentName.name}" sortable="true"
+                           headerText="#{bindings.DepartmentsView1.hints.DepartmentName.label}" id="c2">
+                    <af:outputText value="#{row.DepartmentName}"
+                                   shortDesc="#{bindings.DepartmentsView1.hints.DepartmentName.tooltip}" id="ot2"/>
+                </af:column>
+                <af:column sortProperty="#{bindings.DepartmentsView1.hints.ManagerId.name}" sortable="true"
+                           headerText="#{bindings.DepartmentsView1.hints.ManagerId.label}" id="c3">
+                    <af:outputText value="#{row.ManagerId}"
+                                   shortDesc="#{bindings.DepartmentsView1.hints.ManagerId.tooltip}" id="ot3">
+                        <af:convertNumber groupingUsed="false"
+                                          pattern="#{bindings.DepartmentsView1.hints.ManagerId.format}"/>
+                    </af:outputText>
+                </af:column>
+                <af:column sortProperty="#{bindings.DepartmentsView1.hints.LocationId.name}" sortable="true"
+                           headerText="#{bindings.DepartmentsView1.hints.LocationId.label}" id="c4">
+                    <af:selectOneChoice value="#{row.bindings.LocationId.inputValue}" label="#{bindings.LocationId}"
+                                        required="#{bindings.DepartmentsView1.hints.LocationId.mandatory}"
+                                        shortDesc="#{bindings.DepartmentsView1.hints.LocationId.tooltip}" id="soc1">
+                        <f:selectItems value="#{row.bindings.LocationId.items}" id="si1"/>
+                        <f:validator binding="#{row.bindings.LocationId.validator}"/>
+                    </af:selectOneChoice>
+                </af:column>
+            </af:table>
+        </af:panelCollection>
+    </af:panelBox>
+    <af:panelBox text="Department Form" id="pb2">
+        <f:facet name="toolbar"/>
+        <af:panelGroupLayout id="pgl1" visible="#{CheckStatus.consultationMode}">
+            <af:button text="Create" disabled="#{!bindings.Create.enabled}" id="b2"
+                       actionListener="#{CheckStatus.setModeCreate}"/>
+            <af:button text="Update" id="b1" actionListener="#{CheckStatus.setModeEdit}"/>
+            <af:button actionListener="#{CheckStatus.setModeDelete}" text="Delete" disabled="#{!bindings.Delete.enabled}"
+                       id="b3" partialTriggers="b4 b5">
+                <af:showPopupBehavior popupId="p1" disabled="#{!CheckStatus.consultationMode}"/>
+            </af:button>
+            <af:popup childCreation="deferred" autoCancel="disabled" id="p1">
+                <af:dialog id="d1" title="You Want Delete It?" dialogListener="#{CheckStatus.dialogListener}"
+                           partialTriggers="b3">
+                    <f:facet name="buttonBar"/>
+                </af:dialog>
+            </af:popup>
+        </af:panelGroupLayout>
+        <af:panelFormLayout id="pfl1" visible="#{!CheckStatus.consultationMode}" partialTriggers="b2 b5 b4 b1">
+            <af:inputText value="#{bindings.DepartmentId.inputValue}" label="#{bindings.DepartmentId.hints.label}"
+                          required="#{bindings.DepartmentId.hints.mandatory}"
+                          columns="#{bindings.DepartmentId.hints.displayWidth}"
+                          maximumLength="#{bindings.DepartmentId.hints.precision}"
+                          shortDesc="#{bindings.DepartmentId.hints.tooltip}" id="it1">
+                <f:validator binding="#{bindings.DepartmentId.validator}"/>
+                <af:convertNumber groupingUsed="false" pattern="#{bindings.DepartmentId.format}"/>
+            </af:inputText>
+            <af:inputText value="#{bindings.DepartmentName.inputValue}" label="#{bindings.DepartmentName.hints.label}"
+                          required="#{bindings.DepartmentName.hints.mandatory}"
+                          columns="#{bindings.DepartmentName.hints.displayWidth}"
+                          maximumLength="#{bindings.DepartmentName.hints.precision}"
+                          shortDesc="#{bindings.DepartmentName.hints.tooltip}" id="it2">
+                <f:validator binding="#{bindings.DepartmentName.validator}"/>
+            </af:inputText>
+            <af:inputComboboxListOfValues id="managerIdId"
+                                          popupTitle="Search and Select: #{bindings.ManagerId.hints.label}"
+                                          value="#{bindings.ManagerId.inputValue}"
+                                          label="#{bindings.ManagerId.hints.label}"
+                                          model="#{bindings.ManagerId.listOfValuesModel}"
+                                          required="#{bindings.ManagerId.hints.mandatory}"
+                                          columns="#{bindings.ManagerId.hints.displayWidth}"
+                                          shortDesc="#{bindings.ManagerId.hints.tooltip}">
+                <f:validator binding="#{bindings.ManagerId.validator}"/>
+                <af:convertNumber groupingUsed="false" pattern="#{bindings.ManagerId.format}"/>
+            </af:inputComboboxListOfValues>
+            <af:inputComboboxListOfValues id="locationIdId"
+                                          popupTitle="Search and Select: #{bindings.LocationId.hints.label}"
+                                          value="#{bindings.LocationId.inputValue}"
+                                          label="#{bindings.LocationId.hints.label}"
+                                          model="#{bindings.LocationId.listOfValuesModel}"
+                                          required="#{bindings.LocationId.hints.mandatory}"
+                                          columns="#{bindings.LocationId.hints.displayWidth}"
+                                          shortDesc="#{bindings.LocationId.hints.tooltip}">
+                <f:validator binding="#{bindings.LocationId.validator}"/>
+                <af:convertNumber groupingUsed="false" pattern="#{bindings.LocationId.format}"/>
+            </af:inputComboboxListOfValues>
+        </af:panelFormLayout>
+        <af:panelGroupLayout id="pgl2" visible="#{!CheckStatus.consultationMode}" partialTriggers="b2 b5 b4 b1">
+            <af:button actionListener="#{CheckStatus.setModeSave}" text="Save" id="b4"/>
+            <af:button actionListener="#{CheckStatus.setModeCancel}" text="Cancel" immediate="true" id="b5">
+                <af:resetActionListener/>
+            </af:button>
+        </af:panelGroupLayout>
+    </af:panelBox>
+</jsp:root>

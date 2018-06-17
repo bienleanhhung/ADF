@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" xmlns:h="http://java.sun.com/jsf/html">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <f:view>
+        <af:document title="Employees.jspx" id="d1">
+            <af:form id="f1">
+                <af:pageTemplate viewId="/oracle/templates/threeColumnTemplate.jspx" id="pt1">
+                    <f:facet name="center">
+                        <af:panelTabbed id="pt2" binding="#{TabBean.panelTabbed}">
+                            <af:showDetailItem id="employeeSearch" text="Employee Search" binding="#{TabBean.empTab}"
+                                               stretchChildren="first">
+                                <af:region value="#{bindings.EmployeesTaskFlow1.regionModel}" id="r1"/>
+                            </af:showDetailItem>
+                            <af:showDetailItem id="employeeDetails" text="Employee Details"
+                                               binding="#{TabBean.empDetailTab}" stretchChildren="first">
+                                <af:region value="#{bindings.EmployeeDetailTaskFlow1.regionModel}" id="r2"/>
+                                <af:setPropertyListener from="EmployeeDetail" to="#{pageFlowScope.tabClicked}"
+                                                        type="disclosure"/>
+                            </af:showDetailItem>
+                        </af:panelTabbed>
+                    </f:facet>
+                    <f:facet name="header"/>
+                    <f:facet name="end"/>
+                    <f:facet name="start"/>
+                    <f:facet name="branding"/>
+                    <f:facet name="copyright"/>
+                    <f:facet name="status"/>
+                </af:pageTemplate>
+            </af:form>
+        </af:document>
+    </f:view>
+</jsp:root>

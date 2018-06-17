@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core">
+  <af:panelGroupLayout layout="vertical" id="pgl1">
+    <af:panelHeader text="Employees" id="ph1">
+      <af:query id="qryId1" headerText="Search" disclosed="true"
+                value="#{bindings.ImplicitViewCriteriaQuery.queryDescriptor}"
+                model="#{bindings.ImplicitViewCriteriaQuery.queryModel}"
+                queryListener="#{bindings.ImplicitViewCriteriaQuery.processQuery}"
+                queryOperationListener="#{bindings.ImplicitViewCriteriaQuery.processQueryOperation}"
+                resultComponentId="::resId1"/>
+    </af:panelHeader>
+    <af:table value="#{bindings.EmployeesView1.collectionModel}" var="row" rows="#{bindings.EmployeesView1.rangeSize}"
+              emptyText="#{bindings.EmployeesView1.viewable ? 'No data to display.' : 'Access Denied.'}"
+              rowBandingInterval="0" selectedRowKeys="#{bindings.EmployeesView1.collectionModel.selectedRow}"
+              selectionListener="#{bindings.EmployeesView1.collectionModel.makeCurrent}" rowSelection="single"
+              fetchSize="#{bindings.EmployeesView1.rangeSize}" id="resId1">
+      <af:column headerText="#{bindings.EmployeesView1.hints.EmployeeId.label}" id="resId1c1">
+        <af:link shortDesc="#{bindings.EmployeesView1.hints.EmployeeId.tooltip}" id="ot1" text="#{row.EmployeeId}"
+                 actionListener="#{bindings.onDepartmentChange.execute}"/>
+      </af:column>
+    </af:table>
+  </af:panelGroupLayout>
+</jsp:root>

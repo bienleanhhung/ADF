@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.1.3.10.8" id="EmployeeDetailPageDef"
+                Package="Fragment">
+    <parameters/>
+    <executables>
+        <variableIterator id="variables"/>
+        <iterator Binds="EmployeeDetailView1" RangeSize="25" DataControl="AppModuleDataControl"
+                  id="EmployeeDetailView1Iterator"/>
+        <iterator Binds="DepartmentsView1" RangeSize="10" DataControl="AppModuleDataControl"
+                  id="DepartmentsView1Iterator"/>
+        <iterator Binds="EmployeesView1" RangeSize="-1" DataControl="AppModuleDataControl" id="EmployeesView1Iterator"/>
+    </executables>
+    <bindings>
+        <attributeValues IterBinding="EmployeeDetailView1Iterator" id="CommissionPct">
+            <AttrNames>
+                <Item Value="CommissionPct"/>
+            </AttrNames>
+        </attributeValues>
+        <attributeValues IterBinding="EmployeeDetailView1Iterator" id="Email">
+            <AttrNames>
+                <Item Value="Email"/>
+            </AttrNames>
+        </attributeValues>
+        <attributeValues IterBinding="EmployeeDetailView1Iterator" id="EmployeeId">
+            <AttrNames>
+                <Item Value="EmployeeId"/>
+            </AttrNames>
+        </attributeValues>
+        <attributeValues IterBinding="EmployeeDetailView1Iterator" id="FirstName">
+            <AttrNames>
+                <Item Value="FirstName"/>
+            </AttrNames>
+        </attributeValues>
+        <attributeValues IterBinding="EmployeeDetailView1Iterator" id="HireDate">
+            <AttrNames>
+                <Item Value="HireDate"/>
+            </AttrNames>
+        </attributeValues>
+        <attributeValues IterBinding="EmployeeDetailView1Iterator" id="LastName">
+            <AttrNames>
+                <Item Value="LastName"/>
+            </AttrNames>
+        </attributeValues>
+        <attributeValues IterBinding="EmployeeDetailView1Iterator" id="ManagerId">
+            <AttrNames>
+                <Item Value="ManagerId"/>
+            </AttrNames>
+        </attributeValues>
+        <attributeValues IterBinding="EmployeeDetailView1Iterator" id="PhoneNumber">
+            <AttrNames>
+                <Item Value="PhoneNumber"/>
+            </AttrNames>
+        </attributeValues>
+        <attributeValues IterBinding="EmployeeDetailView1Iterator" id="Salary">
+            <AttrNames>
+                <Item Value="Salary"/>
+            </AttrNames>
+        </attributeValues>
+        <action id="Rollback" DataControl="AppModuleDataControl" RequiresUpdateModel="false"
+                Action="rollbackTransaction"/>
+        <action IterBinding="EmployeeDetailView1Iterator" id="Execute"
+                InstanceName="AppModuleDataControl.EmployeeDetailView1" DataControl="AppModuleDataControl"
+                RequiresUpdateModel="true" Action="iteratorExecute"/>
+        <action id="Commit" DataControl="AppModuleDataControl" RequiresUpdateModel="true" Action="commitTransaction"/>
+        <list IterBinding="EmployeesView1Iterator" StaticList="false" Uses="LOV_DepartmentId" id="DepartmentId1"
+              DTSupportsMRU="true" SelectItemValueMode="ListObject"/>
+        <list IterBinding="EmployeesView1Iterator" StaticList="false" Uses="LOV_JobId" id="JobId1" DTSupportsMRU="true"
+              SelectItemValueMode="ListObject"/>
+        <gantt IterBinding="EmployeesView1Iterator" id="EmployeesView1" xmlns="http://xmlns.oracle.com/adfm/dvt">
+            <ganttDataMap>
+                <nodeDefinition DefName="model.EmployeesView" type="Resources">
+                    <AttrNames>
+                        <Item Value="EmployeeId" type="resourceId"/>
+                    </AttrNames>
+                    <Accessors>
+                        <Item Value="JobHistoryGanttView" type="tasks"/>
+                    </Accessors>
+                </nodeDefinition>
+                <nodeDefinition type="Tasks" DefName="model.JobHistoryGanttView">
+                    <AttrNames>
+                        <Item Value="EmployeeId" type="taskId"/>
+                        <Item Value="StartDate" type="startTime"/>
+                        <Item Value="EndDate" type="endTime"/>
+                        <Item Value="Countday" type="label"/>
+                    </AttrNames>
+                </nodeDefinition>
+                <nodeDefinition type="Dependents">
+                    <AttrNames/>
+                </nodeDefinition>
+                <nodeDefinition type="SplitTasks">
+                    <AttrNames/>
+                </nodeDefinition>
+                <nodeDefinition type="RecurringTasks">
+                    <AttrNames/>
+                </nodeDefinition>
+                <nodeDefinition type="Subresources">
+                    <AttrNames/>
+                </nodeDefinition>
+            </ganttDataMap>
+        </gantt>
+        <eventBinding id="eventBinding" Listener="javax.faces.event.ActionListener">
+            <events xmlns="http://xmlns.oracle.com/adfm/contextualEvent">
+                <event name="RefreshEmployees" eventType="Action Event"/>
+            </events>
+        </eventBinding>
+    </bindings>
+</pageDefinition>

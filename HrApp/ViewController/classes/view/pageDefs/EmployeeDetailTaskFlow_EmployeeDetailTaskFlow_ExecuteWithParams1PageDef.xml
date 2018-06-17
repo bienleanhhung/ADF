@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.1.3.10.8"
+                id="EmployeeDetailTaskFlow_EmployeeDetailTaskFlow_ExecuteWithParams1PageDef" Package="view.pageDefs"
+                SkipValidation="true">
+  <parameters/>
+  <executables>
+    <iterator Binds="JobHistoryView1" RangeSize="25" DataControl="AppModuleDataControl" id="JobHistoryView1Iterator"
+              Refresh="never"/>
+  </executables>
+  <bindings>
+    <action IterBinding="JobHistoryView1Iterator" id="ExecuteWithParams" RequiresUpdateModel="true"
+            Action="executeWithParams">
+      <NamedData NDName="empId" NDValue="#{pageFlowScope.SelectEmpId}" NDType="java.lang.Integer"/>
+    </action>
+  </bindings>
+</pageDefinition>

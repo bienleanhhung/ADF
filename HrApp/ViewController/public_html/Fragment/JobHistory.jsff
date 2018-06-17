@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1" xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+  <af:table value="#{bindings.JobHistoryView1.collectionModel}" var="row" rows="#{bindings.JobHistoryView1.rangeSize}"
+            emptyText="#{bindings.JobHistoryView1.viewable ? 'No data to display.' : 'Access Denied.'}"
+            rowBandingInterval="0" selectedRowKeys="#{bindings.JobHistoryView1.collectionModel.selectedRow}"
+            selectionListener="#{bindings.JobHistoryView1.collectionModel.makeCurrent}" rowSelection="single"
+            fetchSize="#{bindings.JobHistoryView1.rangeSize}" id="t1">
+    <af:column headerText="#{bindings.JobHistoryView1.hints.EmployeeId.label}" id="c1">
+      <af:outputText value="#{row.EmployeeId}" shortDesc="#{bindings.JobHistoryView1.hints.EmployeeId.tooltip}"
+                     id="ot1">
+        <af:convertNumber groupingUsed="false" pattern="#{bindings.JobHistoryView1.hints.EmployeeId.format}"/>
+      </af:outputText>
+    </af:column>
+    <af:column headerText="#{bindings.JobHistoryView1.hints.StartDate.label}" id="c2">
+      <af:outputText value="#{row.StartDate}" shortDesc="#{bindings.JobHistoryView1.hints.StartDate.tooltip}" id="ot2">
+        <af:convertDateTime pattern="#{bindings.JobHistoryView1.hints.StartDate.format}"/>
+      </af:outputText>
+    </af:column>
+    <af:column headerText="#{bindings.JobHistoryView1.hints.EndDate.label}" id="c3">
+      <af:outputText value="#{row.EndDate}" shortDesc="#{bindings.JobHistoryView1.hints.EndDate.tooltip}" id="ot3">
+        <af:convertDateTime pattern="#{bindings.JobHistoryView1.hints.EndDate.format}"/>
+      </af:outputText>
+    </af:column>
+    <af:column headerText="#{bindings.JobHistoryView1.hints.JobId.label}" id="c4">
+      <af:outputText value="#{row.JobId}" shortDesc="#{bindings.JobHistoryView1.hints.JobId.tooltip}" id="ot4"/>
+    </af:column>
+    <af:column headerText="#{bindings.JobHistoryView1.hints.DepartmentId.label}" id="c5">
+      <af:outputText value="#{row.DepartmentId}" shortDesc="#{bindings.JobHistoryView1.hints.DepartmentId.tooltip}"
+                     id="ot5">
+        <af:convertNumber groupingUsed="false" pattern="#{bindings.JobHistoryView1.hints.DepartmentId.format}"/>
+      </af:outputText>
+    </af:column>
+  </af:table>
+  <af:button text="Back" id="back" action="back"/>
+</jsp:root>

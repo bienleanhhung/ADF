@@ -1,0 +1,85 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core">
+  <af:panelBox text="Jobs Table" id="pb1">
+    <f:facet name="toolbar"/>
+    <af:table value="#{bindings.JobsView1.collectionModel}" var="row" rows="#{bindings.JobsView1.rangeSize}"
+              emptyText="#{bindings.JobsView1.viewable ? 'No data to display.' : 'Access Denied.'}"
+              rowBandingInterval="0" selectedRowKeys="#{bindings.JobsView1.collectionModel.selectedRow}"
+              selectionListener="#{bindings.JobsView1.collectionModel.makeCurrent}"
+              rowSelection="#{CheckStatus.modeEdit}"
+              fetchSize="#{bindings.JobsView1.rangeSize}" id="t1" partialTriggers="::b2 ::b3 ::b4 ::b5">
+      <af:column headerText="#{bindings.JobsView1.hints.JobId.label}" id="c1">
+        <af:outputText value="#{row.JobId}" shortDesc="#{bindings.JobsView1.hints.JobId.tooltip}" id="ot1"/>
+      </af:column>
+      <af:column headerText="#{bindings.JobsView1.hints.JobTitle.label}" id="c2">
+        <af:outputText value="#{row.JobTitle}" shortDesc="#{bindings.JobsView1.hints.JobTitle.tooltip}" id="ot2"/>
+      </af:column>
+      <af:column headerText="#{bindings.JobsView1.hints.MinSalary.label}" id="c3">
+        <af:outputText value="#{row.MinSalary}" shortDesc="#{bindings.JobsView1.hints.MinSalary.tooltip}" id="ot3">
+          <af:convertNumber groupingUsed="false" pattern="#{bindings.JobsView1.hints.MinSalary.format}"/>
+        </af:outputText>
+      </af:column>
+      <af:column headerText="#{bindings.JobsView1.hints.MaxSalary.label}" id="c4">
+        <af:outputText value="#{row.MaxSalary}" shortDesc="#{bindings.JobsView1.hints.MaxSalary.tooltip}" id="ot4">
+          <af:convertNumber groupingUsed="false" pattern="#{bindings.JobsView1.hints.MaxSalary.format}"/>
+        </af:outputText>
+      </af:column>
+    </af:table>
+  </af:panelBox>
+  <af:panelBox text="Jobs Form" id="pb2">
+    <f:facet name="toolbar"/>
+    <af:panelGroupLayout id="pgl1" visible="#{CheckStatus.consultationMode}">
+      <af:button actionListener="#{CheckStatus.setModeCreate}" text="Create" disabled="#{!bindings.Create.enabled}"
+                 id="b2"/>
+      <af:button text="Update" id="b1" actionListener="#{CheckStatus.setModeEdit}"/>
+      <af:button actionListener="#{CheckStatus.setModeDelete}" text="Delete" disabled="#{!bindings.Delete.enabled}"
+                 id="b3" partialTriggers="b4 b5">
+        <af:showPopupBehavior popupId="p1" disabled="#{!CheckStatus.consultationMode}"/>
+      </af:button>
+      <af:popup childCreation="deferred" autoCancel="disabled" id="p1">
+        <af:dialog id="d1" title="You Want Delete It?" dialogListener="#{CheckStatus.dialogListener}"
+                   partialTriggers="b1">
+          <f:facet name="buttonBar"/>
+        </af:dialog>
+      </af:popup>
+    </af:panelGroupLayout>
+    <af:panelFormLayout id="pfl1" partialTriggers="b2 b1 b4 b5" visible="#{!CheckStatus.consultationMode}">
+      <af:inputText value="#{bindings.JobId.inputValue}" label="#{bindings.JobId.hints.label}"
+                    required="#{bindings.JobId.hints.mandatory}" columns="#{bindings.JobId.hints.displayWidth}"
+                    maximumLength="#{bindings.JobId.hints.precision}" shortDesc="#{bindings.JobId.hints.tooltip}"
+                    id="it1">
+        <f:validator binding="#{bindings.JobId.validator}"/>
+      </af:inputText>
+      <af:inputText value="#{bindings.JobTitle.inputValue}" label="#{bindings.JobTitle.hints.label}"
+                    required="#{bindings.JobTitle.hints.mandatory}" columns="#{bindings.JobTitle.hints.displayWidth}"
+                    maximumLength="#{bindings.JobTitle.hints.precision}" shortDesc="#{bindings.JobTitle.hints.tooltip}"
+                    id="it2">
+        <f:validator binding="#{bindings.JobTitle.validator}"/>
+      </af:inputText>
+      <af:inputText value="#{bindings.MinSalary.inputValue}" label="#{bindings.MinSalary.hints.label}"
+                    required="#{bindings.MinSalary.hints.mandatory}" columns="#{bindings.MinSalary.hints.displayWidth}"
+                    maximumLength="#{bindings.MinSalary.hints.precision}"
+                    shortDesc="#{bindings.MinSalary.hints.tooltip}" id="it3">
+        <f:validator binding="#{bindings.MinSalary.validator}"/>
+        <af:convertNumber groupingUsed="false" pattern="#{bindings.MinSalary.format}"/>
+      </af:inputText>
+      <af:inputText value="#{bindings.MaxSalary.inputValue}" label="#{bindings.MaxSalary.hints.label}"
+                    required="#{bindings.MaxSalary.hints.mandatory}" columns="#{bindings.MaxSalary.hints.displayWidth}"
+                    maximumLength="#{bindings.MaxSalary.hints.precision}"
+                    shortDesc="#{bindings.MaxSalary.hints.tooltip}" id="it4">
+        <f:validator binding="#{bindings.MaxSalary.validator}"/>
+        <af:convertNumber groupingUsed="false" pattern="#{bindings.MaxSalary.format}"/>
+      </af:inputText>
+      <f:facet name="footer"/>
+    </af:panelFormLayout>
+    <af:panelGroupLayout id="pgl2" visible="#{!CheckStatus.consultationMode}" partialTriggers="b2 b1 b4 b5">
+      <af:button actionListener="#{CheckStatus.setModeSave}" text="Save"
+                 id="b4"/>
+      <af:button actionListener="#{CheckStatus.setModeCancel}" text="Cancel"
+                 immediate="true" id="b5" partialTriggers="t1">
+        <af:resetActionListener/>
+      </af:button>
+    </af:panelGroupLayout>
+  </af:panelBox>
+</jsp:root>

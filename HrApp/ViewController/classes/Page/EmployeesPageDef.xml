@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.1.3.10.8" id="EmployeesPageDef" Package="Page">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <taskFlow id="EmployeesTaskFlow1" taskFlowId="/WEB-INF/EmployeesTaskFlow.xml#EmployeesTaskFlow"
+              activation="deferred" xmlns="http://xmlns.oracle.com/adf/controller/binding"/>
+    <taskFlow id="EmployeeDetailTaskFlow1" taskFlowId="/WEB-INF/EmployeeDetailTaskFlow.xml#EmployeeDetailTaskFlow"
+              activation="conditional" xmlns="http://xmlns.oracle.com/adf/controller/binding" Refresh="ifNeeded"
+              active="#{pageFlowScope.tabClicked=='EmployeeDetail'}">
+      <parameters>
+        <parameter id="empId" value="#{bindings.empId.inputValue}"/>
+      </parameters>
+    </taskFlow>
+    <iterator id="EmpDetailIterator" Binds="root" DataControl="EmpDetail" RangeSize="25"/>
+  </executables>
+  <bindings>
+    <attributeValues IterBinding="EmpDetailIterator" id="empId">
+      <AttrNames>
+        <Item Value="empId"/>
+      </AttrNames>
+    </attributeValues>
+  </bindings>
+  <eventMap xmlns="http://xmlns.oracle.com/adfm/contextualEvent">
+    <event name="RefreshEmployees">
+      <producer region="EmployeeDetailTaskFlow1.EmployeeDetailPageDef.eventBinding">
+        <consumer region="EmployeesTaskFlow1" handler="EmployeePageDef.refreshEmployees"/>
+      </producer>
+    </event>
+  </eventMap>
+</pageDefinition>

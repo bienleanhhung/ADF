@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+    <af:document title="Index.jsf" id="d1">
+        <af:form id="f1">
+            <af:pageTemplate viewId="/oracle/templates/threeColumnTemplate.jspx" id="pt1">
+                <f:facet name="center">
+                    <af:menuBar id="mb1">
+                        <af:commandMenuItem text="Department" id="cmi2" action="#{Navigation.Department}"
+                                            inlineStyle="font-weight:normal; color:Blue; font-size:large;"/>
+                        <af:commandMenuItem text="Employee" id="cmi1" inlineStyle="font-size:large; font-weight:normal;"
+                                            action="#{Navigation.Employee}"/>
+                        <af:commandMenuItem text="Job" id="cmi3" inlineStyle="font-size:large; font-weight:normal;"
+                                            action="#{Navigation.Job}"/>
+                    </af:menuBar>
+                </f:facet>
+                <f:facet name="header"/>
+                <f:facet name="end"/>
+                <f:facet name="start"/>
+                <f:facet name="branding"/>
+                <f:facet name="copyright"/>
+                <f:facet name="status"/>
+            </af:pageTemplate>
+        </af:form>
+    </af:document>
+</f:view>

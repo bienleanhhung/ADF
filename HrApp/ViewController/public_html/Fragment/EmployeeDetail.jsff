@@ -84,7 +84,7 @@
             <f:facet name="footer"/>
         </af:panelFormLayout>
         <af:panelGroupLayout id="pgl2" visible="#{CheckStatus.consultationMode}" partialTriggers="b1 b2 b3">
-            <af:button text="Update" id="b1" actionListener="#{bindings.eventBinding.listener.processAction}"/>
+            <af:button text="Update" id="b1" actionListener="#{CheckStatus.setModeEdit}"/>
         </af:panelGroupLayout>
         <af:button text="Job History" id="jobHistory" action="jobHistory"/>
         <af:panelGroupLayout id="pgl1" visible="#{!CheckStatus.consultationMode}" partialTriggers="b1 b2 b3">
